@@ -18,10 +18,26 @@ jobs:
 
       - run: npm install
 
-      - name: Create env
+      - name: Create config.json5
         run: |
-          echo "LTUID_V2=${{ secrets.LTUID_V2 }}" >> .env
-          echo "LTOKEN_V2=${{ secrets.LTOKEN_V2 }}" >> .env
-          echo "ACCOUNT_MID_V2=${{ secrets.ACCOUNT_MID_V2 }}" >> .env
+          cat > config.json5 <<EOF
+          {
+            accounts: [
+              {
+                cookies: {
+                  ltuid_v2: "${{ secrets.LTUID_V2 }}",
+                  ltoken_v2: "${{ secrets.LTOKEN_V2 }}",
+                  account_mid_v2: "${{ secrets.ACCOUNT_MID_V2 }}"
+                },
 
-      - run: npm start
+                games: [
+                  "genshin",
+                  "starrail",
+                  "zzz"
+                ]
+              }
+            ]
+          }
+          EOF
+
+      - run: node index.js
