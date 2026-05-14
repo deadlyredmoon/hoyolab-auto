@@ -6,34 +6,22 @@ on:
     - cron: '0 16 * * *'
 
 jobs:
-  check-in:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 22
 
-      - name: Install dependencies
-        run: npm install
+      - run: npm install
 
-      - name: Create config
+      - name: Create env
         run: |
-          cat > config.json <<EOF
-          {
-            "accounts": [
-              {
-                "ltuid_v2": "${{ secrets.LTUID_V2 }}",
-                "ltoken_v2": "${{ secrets.LTOKEN_V2 }}",
-                "account_mid_v2": "${{ secrets.ACCOUNT_MID_V2 }}"
-              }
-            ]
-          }
-          EOF
+          echo "LTUID_V2=${{ secrets.LTUID_V2 }}" >> .env
+          echo "LTOKEN_V2=${{ secrets.LTOKEN_V2 }}" >> .env
+          echo "ACCOUNT_MID_V2=${{ secrets.ACCOUNT_MID_V2 }}" >> .env
 
-      - name: Run check-in
-        run: node index.js --sign
+      - run: npm start
