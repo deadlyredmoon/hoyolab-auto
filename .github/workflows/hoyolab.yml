@@ -5,18 +5,28 @@ on:
   schedule:
     - cron: '0 16 * * *'
 
+permissions:
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v5
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
         with:
           node-version: 22
+          cache: npm
 
-      - run: npm install
+      - name: Install dependencies
+        run: npm install
 
       - name: Create config.json5
         run: |
@@ -40,4 +50,5 @@ jobs:
           }
           EOF
 
-      - run: node index.js
+      - name: Run HoYoLAB check-in
+        run: node index.js
