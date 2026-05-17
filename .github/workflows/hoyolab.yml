@@ -28,15 +28,17 @@ jobs:
         run: |
           cat > config.json5 <<EOF
           {
-            crons: {
-              blacklist: [],
-              whitelist: []
-            },
-            platforms: {
-              genshin: true,
-              starrail: true,
-              zzz: true
-            }
+            accounts: [
+              {
+                cookies: {
+                  ltuid_v2: "test",
+                  ltoken_v2: "test",
+                  account_mid_v2: "test",
+                  cookie_token_v2: "test"
+                },
+                games: ["genshin", "starrail", "zzz"]
+              }
+            ]
           }
           EOF
 
