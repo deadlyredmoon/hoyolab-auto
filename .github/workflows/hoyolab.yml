@@ -28,27 +28,22 @@ jobs:
         run: |
           cat > config.json5 <<EOF
           {
-            crons: {
-              blacklist: [],
-              whitelist: []
-            },
+            accounts: [
+              {
+                cookies: {
+                  ltuid_v2: "${{ secrets.LTUID_V2 }}",
+                  ltoken_v2: "${{ secrets.LTOKEN_V2 }}",
+                  account_mid_v2: "${{ secrets.ACCOUNT_MID_V2 }}",
+                  cookie_token_v2: "${{ secrets.COOKIE_TOKEN_V2 }}"
+                },
 
-            platforms: {
-              genshin: true,
-              starrail: true,
-              zzz: true
-            },
-
-            cookies: {
-              ltuid_v2: "${{ secrets.LTUID_V2 }}",
-              ltoken_v2: "${{ secrets.LTOKEN_V2 }}",
-              account_mid_v2: "${{ secrets.ACCOUNT_MID_V2 }}",
-              cookie_token_v2: "${{ secrets.COOKIE_TOKEN_V2 }}"
-            }
+                games: ["genshin", "starrail", "zzz"]
+              }
+            ]
           }
           EOF
 
-      - name: Run HoYoLAB check-in + log
+      - name: Run check-in + log
         run: |
           node index.js | tee result.log
 
