@@ -29,9 +29,7 @@ jobs:
           cat > config.json5 <<EOF
           {
             platforms: {
-              genshin: true,
-              starrail: true,
-              zzz: true
+              genshin: true
             }
           }
           EOF
