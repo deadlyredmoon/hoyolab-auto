@@ -28,6 +28,11 @@ jobs:
         run: |
           cat > config.json5 <<EOF
           {
+            crons: {
+              blacklist: [],
+              whitelist: []
+            },
+
             platforms: {
               genshin: true,
               starrail: true,
